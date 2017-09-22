@@ -1,6 +1,8 @@
-﻿namespace EstrategiaEstadistica.EstrategiaEstadistica
+﻿namespace MedidoresDeAgua.Dominio
 {
-    class Factura
+    public class Factura
     {
+        public int DiasDeLecturaFacturados { get; protected set; }
+        public double M3Consumidos { get; protected set; }
     }
 }

@@ -7,8 +7,8 @@
     <ProjectGuid>{698DCEE9-B49F-4D9F-9578-E2263AFE573A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EstrategiaEstadistica</RootNamespace>
-    <AssemblyName>EstrategiaEstadistica</AssemblyName>
+    <RootNamespace>MedidoresDeAgua</RootNamespace>
+    <AssemblyName>MedidoresDeAgua</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,8 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Dominio\Categoria.cs" />
+    <Compile Include="Dominio\Factura.cs" />
+    <Compile Include="Dominio\Propiedad.cs" />
+    <Compile Include="Dominio\Servicio.cs" />
+    <Compile Include="EstrategiasEstadisticas\IEstrategiaEstadistica.cs" />
+    <Compile Include="EstrategiasEstadisticas\SingletonEstrategiaMediaDesvEst.cs" />
+    <Compile Include="EstrategiasEstadisticas\SingletonEstrategiaPromedioNormalizado.cs" />
+    <Compile Include="EstrategiasEstadisticas\SingletonEstrategiaSumatoria.cs" />
+    <Compile Include="GestorReporte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Dominio\Zona.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace EstrategiaEstadistica.Dominio
+namespace MedidoresDeAgua.Dominio
 {
-    class Servicio
+    public class Servicio
     {
+        public Categoria Categoria { get; protected set; }
+        public List<Factura> Facturas { get; protected set; }
     }
 }

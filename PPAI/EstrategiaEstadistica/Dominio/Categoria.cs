@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EstrategiaEstadistica.Dominio
+﻿namespace MedidoresDeAgua.Dominio
 {
-    class Categoria
+    public class Categoria
     {
+        public string Nombre { get; protected set; }
     }
 }

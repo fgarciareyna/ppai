@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EstrategiaEstadistica.Dominio
+﻿namespace MedidoresDeAgua.Dominio
 {
-    class Propiedad
+    public class Propiedad
     {
+        public Servicio Servicio { get; protected set; }
     }
 }

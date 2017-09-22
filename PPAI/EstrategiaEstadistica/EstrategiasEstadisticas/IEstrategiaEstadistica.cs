@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using EstrategiaEstadistica.Dominio;
+using MedidoresDeAgua.Dominio;
 
-namespace EstrategiaEstadistica.EstrategiasEstadisticas
+namespace MedidoresDeAgua.EstrategiasEstadisticas
 {
     public interface IEstrategiaEstadistica
     {
-        IList<string[]> CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin, List<string> categorias, List<Zona> zonas);
+        IList<IList<string>> CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin, List<string> categorias, List<Zona> zonas);
     }
 }
