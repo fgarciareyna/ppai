@@ -42,8 +42,10 @@
   <ItemGroup>
     <Compile Include="Dominio\Categoria.cs" />
     <Compile Include="Dominio\Factura.cs" />
+    <Compile Include="Dominio\PeriodoFacturacion.cs" />
     <Compile Include="Dominio\Propiedad.cs" />
     <Compile Include="Dominio\Servicio.cs" />
+    <Compile Include="EstrategiasEstadisticas\EnumEstrategiasEstadisticas.cs" />
     <Compile Include="EstrategiasEstadisticas\IEstrategiaEstadistica.cs" />
     <Compile Include="EstrategiasEstadisticas\SingletonEstrategiaMediaDesvEst.cs" />
     <Compile Include="EstrategiasEstadisticas\SingletonEstrategiaPromedioNormalizado.cs" />
@@ -51,6 +53,8 @@
     <Compile Include="GestorReporte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dominio\Zona.cs" />
+    <Compile Include="Resultados\ConsumosPorCategoriaResultado.cs" />
+    <Compile Include="Resultados\ConsumosPorCategoriaYZonaResultado.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MedidoresDeAgua.Dominio;
+using MedidoresDeAgua.Resultados;
 
 namespace MedidoresDeAgua.EstrategiasEstadisticas
 {
@@ -15,7 +16,8 @@ namespace MedidoresDeAgua.EstrategiasEstadisticas
             return _estrategia ?? (_estrategia = new SingletonEstrategiaSumatoria());
         }
 
-        public IList<IList<string>> CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin, List<string> categorias, List<Zona> zonas)
+        public List<ConsumosPorCategoriaYZonaResultado> CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin,
+            List<string> categorias, List<Zona> zonas)
         {
             throw new NotImplementedException();
         }
