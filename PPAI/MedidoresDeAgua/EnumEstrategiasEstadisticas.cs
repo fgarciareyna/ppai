@@ -1,4 +1,4 @@
-﻿namespace MedidoresDeAgua.EstrategiasEstadisticas
+﻿namespace MedidoresDeAgua
 {
     public enum EnumEstrategiasEstadisticas
     {
