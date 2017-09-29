@@ -1,7 +1,9 @@
 ﻿using MedidoresDeAgua.Dominio;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using MedidoresDeAgua;
 
 namespace Presentacion
 {
@@ -13,6 +15,12 @@ namespace Presentacion
         public PresentacionReporteEstadistico()
         {
             InitializeComponent();
+
+            dtp_desde.Value = DateTime.Today.AddMonths(-1).AddDays(-1);
+            dtp_hasta.Value = DateTime.Today.AddDays(-1);
+
+            dtp_desde.MaxDate = DateTime.Today.AddMonths(-1);
+            dtp_hasta.MaxDate = DateTime.Today;
 
             cb_metodos_estadisticos.Items.Add("Sumatoria");
             cb_metodos_estadisticos.Items.Add("Promedio Normalizado");
@@ -44,7 +52,7 @@ namespace Presentacion
                 {
                     var propiedad = new Propiedad();
 
-                    var categoria = new Categoria($"Categoria {new Random().Next(1, 10)}");
+                    var categoria = new Categoria($"Categoría {new Random().Next(1, 10)}");
 
                     var servicio = new Servicio(categoria);
 
@@ -66,6 +74,8 @@ namespace Presentacion
 
                         servicio.Facturar(factura);
                     }
+
+                    zona.AgregarPropiedad(propiedad);
                 }
 
                 _zonas.Add(zona);
@@ -84,7 +94,103 @@ namespace Presentacion
 
         private void btn_generar_Click(object sender, EventArgs e)
         {
+            tb_estadisticas.Text = string.Empty;
 
+            if (ValidarFormulario())
+            {
+                var fechaInicio = dtp_desde.Value;
+                var fechaFin = dtp_hasta.Value;
+
+                var categorias = (from object item
+                                  in clb_categorias.CheckedItems
+                                  select item.ToString()).ToList();
+
+                var zonasSeleccionadas = (from object item
+                                  in clb_zonas.CheckedItems
+                                  select item.ToString()).ToList();
+
+                var zonas = _zonas.Where(zona => zonasSeleccionadas.Contains(zona.Nombre)).ToList();
+
+                var gestor = new GestorReporte(fechaInicio, fechaFin, categorias, zonas);
+
+                EnumEstrategiasEstadisticas estrategia;
+
+                switch (cb_metodos_estadisticos.SelectedIndex)
+                {
+                    case 0:
+                        estrategia = EnumEstrategiasEstadisticas.Sumatoria;
+                        break;
+                    case 1:
+                        estrategia = EnumEstrategiasEstadisticas.PromedioNormalizado;
+                        break;
+                    case 2:
+                        estrategia = EnumEstrategiasEstadisticas.MediaDesvEst;
+                        break;
+                    default:
+                        MessageBox.Show(@"Estrategia no soportada");
+                        cb_metodos_estadisticos.Focus();
+                        return;
+                }
+
+                gestor.TomarMetodoEstadistico(estrategia);
+
+                var estadisticas = gestor.TomarConfirmacion();
+
+                foreach (var estadistica in estadisticas)
+                {
+                    tb_estadisticas.Lines = tb_estadisticas.Lines.Concat(estadistica.Lineas()).ToArray();
+                }
+
+                lbl_estadisticas.Visible = true;
+                tb_estadisticas.Visible = true;
+            }
+        }
+
+        private bool ValidarFormulario()
+        {
+            if (dtp_desde.Value > dtp_hasta.Value)
+            {
+                MessageBox.Show(@"La fecha desde debe ser menor a la fecha hasta");
+
+                dtp_desde.Focus();
+
+                return false;
+            }
+
+            if (clb_categorias.CheckedItems.Count == 0)
+            {
+                MessageBox.Show(@"Debe seleccionar al menos una categoría");
+
+                clb_categorias.Focus();
+
+                return false;
+            }
+
+            if (clb_zonas.CheckedItems.Count == 0)
+            {
+                MessageBox.Show(@"Debe seleccionar al menos una zona");
+
+                clb_zonas.Focus();
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private void dtp_desde_ValueChanged(object sender, EventArgs e)
+        {
+            dtp_hasta.MinDate = dtp_desde.Value;
+        }
+
+        private void dtp_hasta_ValueChanged(object sender, EventArgs e)
+        {
+            dtp_desde.MaxDate = dtp_hasta.Value;
+        }
+
+        private void cb_metodos_estadisticos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btn_generar.Enabled = true;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace MedidoresDeAgua.Dominio
         {
             if (string.IsNullOrEmpty(nombre))
                 throw new NotSupportedException("El nombre es requerido");
+
+            Nombre = nombre;
         }
 
         public bool EsCategoria(string categoria)

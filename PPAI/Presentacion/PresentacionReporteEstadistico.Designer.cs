@@ -51,7 +51,8 @@
             this.cb_metodos_estadisticos.Location = new System.Drawing.Point(420, 47);
             this.cb_metodos_estadisticos.Name = "cb_metodos_estadisticos";
             this.cb_metodos_estadisticos.Size = new System.Drawing.Size(307, 21);
-            this.cb_metodos_estadisticos.TabIndex = 0;
+            this.cb_metodos_estadisticos.TabIndex = 5;
+            this.cb_metodos_estadisticos.SelectedIndexChanged += new System.EventHandler(this.cb_metodos_estadisticos_SelectedIndexChanged);
             // 
             // lbl_metodos_estadisticos
             // 
@@ -69,7 +70,7 @@
             this.clb_zonas.Location = new System.Drawing.Point(160, 106);
             this.clb_zonas.Name = "clb_zonas";
             this.clb_zonas.Size = new System.Drawing.Size(98, 304);
-            this.clb_zonas.TabIndex = 2;
+            this.clb_zonas.TabIndex = 4;
             // 
             // lbl_zonas
             // 
@@ -137,8 +138,9 @@
             this.dtp_desde.MaxDate = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
             this.dtp_desde.Name = "dtp_desde";
             this.dtp_desde.Size = new System.Drawing.Size(95, 20);
-            this.dtp_desde.TabIndex = 9;
+            this.dtp_desde.TabIndex = 1;
             this.dtp_desde.Value = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
+            this.dtp_desde.ValueChanged += new System.EventHandler(this.dtp_desde_ValueChanged);
             // 
             // dtp_hasta
             // 
@@ -148,8 +150,9 @@
             this.dtp_hasta.MaxDate = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
             this.dtp_hasta.Name = "dtp_hasta";
             this.dtp_hasta.Size = new System.Drawing.Size(95, 20);
-            this.dtp_hasta.TabIndex = 11;
+            this.dtp_hasta.TabIndex = 2;
             this.dtp_hasta.Value = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
+            this.dtp_hasta.ValueChanged += new System.EventHandler(this.dtp_hasta_ValueChanged);
             // 
             // lbl_hasta
             // 
@@ -176,7 +179,7 @@
             this.clb_categorias.Location = new System.Drawing.Point(33, 106);
             this.clb_categorias.Name = "clb_categorias";
             this.clb_categorias.Size = new System.Drawing.Size(98, 304);
-            this.clb_categorias.TabIndex = 12;
+            this.clb_categorias.TabIndex = 3;
             // 
             // PresentacionReporteEstadistico
             // 

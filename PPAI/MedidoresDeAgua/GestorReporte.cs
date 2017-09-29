@@ -14,6 +14,15 @@ namespace MedidoresDeAgua
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
 
+        public GestorReporte(DateTime fechaInicio, DateTime fechaFin, List<string> categorias,
+            List<Zona> zonas)
+        {
+            FechaInicio = fechaInicio;
+            FechaFin = fechaFin;
+            Categorias = categorias;
+            Zonas = zonas;
+        }
+
         public void TomarMetodoEstadistico(EnumEstrategiasEstadisticas metodoEstadistico)
         {
             switch (metodoEstadistico)
