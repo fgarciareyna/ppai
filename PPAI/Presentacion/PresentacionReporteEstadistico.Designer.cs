@@ -36,13 +36,19 @@
             this.lbl_estadisticas = new System.Windows.Forms.Label();
             this.btn_generar = new System.Windows.Forms.Button();
             this.btn_actualizar = new System.Windows.Forms.Button();
+            this.lbl_desde = new System.Windows.Forms.Label();
+            this.dtp_desde = new System.Windows.Forms.DateTimePicker();
+            this.dtp_hasta = new System.Windows.Forms.DateTimePicker();
+            this.lbl_hasta = new System.Windows.Forms.Label();
+            this.lbl_categorias = new System.Windows.Forms.Label();
+            this.clb_categorias = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // cb_metodos_estadisticos
             // 
             this.cb_metodos_estadisticos.DisplayMember = "0";
             this.cb_metodos_estadisticos.FormattingEnabled = true;
-            this.cb_metodos_estadisticos.Location = new System.Drawing.Point(137, 44);
+            this.cb_metodos_estadisticos.Location = new System.Drawing.Point(420, 47);
             this.cb_metodos_estadisticos.Name = "cb_metodos_estadisticos";
             this.cb_metodos_estadisticos.Size = new System.Drawing.Size(121, 21);
             this.cb_metodos_estadisticos.TabIndex = 0;
@@ -50,7 +56,7 @@
             // lbl_metodos_estadisticos
             // 
             this.lbl_metodos_estadisticos.AutoSize = true;
-            this.lbl_metodos_estadisticos.Location = new System.Drawing.Point(30, 47);
+            this.lbl_metodos_estadisticos.Location = new System.Drawing.Point(313, 50);
             this.lbl_metodos_estadisticos.Name = "lbl_metodos_estadisticos";
             this.lbl_metodos_estadisticos.Size = new System.Drawing.Size(101, 13);
             this.lbl_metodos_estadisticos.TabIndex = 1;
@@ -59,15 +65,15 @@
             // clb_zonas
             // 
             this.clb_zonas.FormattingEnabled = true;
-            this.clb_zonas.Location = new System.Drawing.Point(33, 106);
+            this.clb_zonas.Location = new System.Drawing.Point(160, 106);
             this.clb_zonas.Name = "clb_zonas";
-            this.clb_zonas.Size = new System.Drawing.Size(225, 304);
+            this.clb_zonas.Size = new System.Drawing.Size(98, 304);
             this.clb_zonas.TabIndex = 2;
             // 
             // lbl_zonas
             // 
             this.lbl_zonas.AutoSize = true;
-            this.lbl_zonas.Location = new System.Drawing.Point(30, 81);
+            this.lbl_zonas.Location = new System.Drawing.Point(157, 81);
             this.lbl_zonas.Name = "lbl_zonas";
             this.lbl_zonas.Size = new System.Drawing.Size(40, 13);
             this.lbl_zonas.TabIndex = 3;
@@ -113,11 +119,72 @@
             this.btn_actualizar.UseVisualStyleBackColor = true;
             this.btn_actualizar.Click += new System.EventHandler(this.btn_actualizar_Click);
             // 
+            // lbl_desde
+            // 
+            this.lbl_desde.AutoSize = true;
+            this.lbl_desde.Location = new System.Drawing.Point(30, 20);
+            this.lbl_desde.Name = "lbl_desde";
+            this.lbl_desde.Size = new System.Drawing.Size(41, 13);
+            this.lbl_desde.TabIndex = 8;
+            this.lbl_desde.Text = "Desde:";
+            // 
+            // dtp_desde
+            // 
+            this.dtp_desde.CustomFormat = "dd/mm/yyyy";
+            this.dtp_desde.Location = new System.Drawing.Point(77, 18);
+            this.dtp_desde.MaxDate = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
+            this.dtp_desde.Name = "dtp_desde";
+            this.dtp_desde.Size = new System.Drawing.Size(120, 20);
+            this.dtp_desde.TabIndex = 9;
+            this.dtp_desde.Value = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
+            // 
+            // dtp_hasta
+            // 
+            this.dtp_hasta.CustomFormat = "dd/mm/yyyy";
+            this.dtp_hasta.Location = new System.Drawing.Point(77, 48);
+            this.dtp_hasta.MaxDate = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
+            this.dtp_hasta.Name = "dtp_hasta";
+            this.dtp_hasta.Size = new System.Drawing.Size(120, 20);
+            this.dtp_hasta.TabIndex = 11;
+            this.dtp_hasta.Value = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
+            // 
+            // lbl_hasta
+            // 
+            this.lbl_hasta.AutoSize = true;
+            this.lbl_hasta.Location = new System.Drawing.Point(30, 50);
+            this.lbl_hasta.Name = "lbl_hasta";
+            this.lbl_hasta.Size = new System.Drawing.Size(38, 13);
+            this.lbl_hasta.TabIndex = 10;
+            this.lbl_hasta.Text = "Hasta:";
+            // 
+            // lbl_categorias
+            // 
+            this.lbl_categorias.AutoSize = true;
+            this.lbl_categorias.Location = new System.Drawing.Point(30, 81);
+            this.lbl_categorias.Name = "lbl_categorias";
+            this.lbl_categorias.Size = new System.Drawing.Size(62, 13);
+            this.lbl_categorias.TabIndex = 13;
+            this.lbl_categorias.Text = "Categorías:";
+            // 
+            // clb_categorias
+            // 
+            this.clb_categorias.FormattingEnabled = true;
+            this.clb_categorias.Location = new System.Drawing.Point(33, 106);
+            this.clb_categorias.Name = "clb_categorias";
+            this.clb_categorias.Size = new System.Drawing.Size(98, 304);
+            this.clb_categorias.TabIndex = 12;
+            // 
             // PresentacionReporteEstadistico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(757, 475);
+            this.Controls.Add(this.lbl_categorias);
+            this.Controls.Add(this.clb_categorias);
+            this.Controls.Add(this.dtp_hasta);
+            this.Controls.Add(this.lbl_hasta);
+            this.Controls.Add(this.dtp_desde);
+            this.Controls.Add(this.lbl_desde);
             this.Controls.Add(this.btn_actualizar);
             this.Controls.Add(this.btn_generar);
             this.Controls.Add(this.lbl_estadisticas);
@@ -143,6 +210,12 @@
         private System.Windows.Forms.Label lbl_estadisticas;
         private System.Windows.Forms.Button btn_generar;
         private System.Windows.Forms.Button btn_actualizar;
+        private System.Windows.Forms.Label lbl_desde;
+        private System.Windows.Forms.DateTimePicker dtp_desde;
+        private System.Windows.Forms.DateTimePicker dtp_hasta;
+        private System.Windows.Forms.Label lbl_hasta;
+        private System.Windows.Forms.Label lbl_categorias;
+        private System.Windows.Forms.CheckedListBox clb_categorias;
     }
 }
 

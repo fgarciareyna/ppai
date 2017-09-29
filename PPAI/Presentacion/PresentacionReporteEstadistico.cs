@@ -63,7 +63,7 @@ namespace Presentacion
 
         private void btn_actualizar_Click(object sender, EventArgs e)
         {
-
+            GenerarDatos();
         }
 
         private void btn_generar_Click(object sender, EventArgs e)
