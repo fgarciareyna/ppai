@@ -64,6 +64,7 @@
             // 
             // clb_zonas
             // 
+            this.clb_zonas.CheckOnClick = true;
             this.clb_zonas.FormattingEnabled = true;
             this.clb_zonas.Location = new System.Drawing.Point(160, 106);
             this.clb_zonas.Name = "clb_zonas";
@@ -170,6 +171,7 @@
             // 
             // clb_categorias
             // 
+            this.clb_categorias.CheckOnClick = true;
             this.clb_categorias.FormattingEnabled = true;
             this.clb_categorias.Location = new System.Drawing.Point(33, 106);
             this.clb_categorias.Name = "clb_categorias";
