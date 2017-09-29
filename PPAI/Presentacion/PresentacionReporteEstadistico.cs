@@ -14,11 +14,22 @@ namespace Presentacion
         {
             InitializeComponent();
 
+            cb_metodos_estadisticos.Items.Add("Sumatoria");
+            cb_metodos_estadisticos.Items.Add("Promedio Normalizado");
+            cb_metodos_estadisticos.Items.Add("Media con desviación estándar");
+
+            for (var i = 0; i < 10; i++)
+            {
+                clb_categorias.Items.Add($"Categoría {i + 1}", true);
+            }
+
             GenerarDatos();
         }
 
         private void GenerarDatos()
         {
+            clb_zonas.Items.Clear();
+
             _zonas = new List<Zona>();
 
             var zonas = new Random().Next(5, 10);
@@ -58,6 +69,11 @@ namespace Presentacion
                 }
 
                 _zonas.Add(zona);
+            }
+
+            foreach (var zona in _zonas)
+            {
+                clb_zonas.Items.Add(zona.Nombre, true);
             }
         }
 

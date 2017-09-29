@@ -50,7 +50,7 @@
             this.cb_metodos_estadisticos.FormattingEnabled = true;
             this.cb_metodos_estadisticos.Location = new System.Drawing.Point(420, 47);
             this.cb_metodos_estadisticos.Name = "cb_metodos_estadisticos";
-            this.cb_metodos_estadisticos.Size = new System.Drawing.Size(121, 21);
+            this.cb_metodos_estadisticos.Size = new System.Drawing.Size(307, 21);
             this.cb_metodos_estadisticos.TabIndex = 0;
             // 
             // lbl_metodos_estadisticos
@@ -122,7 +122,7 @@
             // lbl_desde
             // 
             this.lbl_desde.AutoSize = true;
-            this.lbl_desde.Location = new System.Drawing.Point(30, 20);
+            this.lbl_desde.Location = new System.Drawing.Point(28, 20);
             this.lbl_desde.Name = "lbl_desde";
             this.lbl_desde.Size = new System.Drawing.Size(41, 13);
             this.lbl_desde.TabIndex = 8;
@@ -130,28 +130,30 @@
             // 
             // dtp_desde
             // 
-            this.dtp_desde.CustomFormat = "dd/mm/yyyy";
-            this.dtp_desde.Location = new System.Drawing.Point(77, 18);
+            this.dtp_desde.CustomFormat = "dd\'/\'MM\'/\'yyyy";
+            this.dtp_desde.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp_desde.Location = new System.Drawing.Point(75, 18);
             this.dtp_desde.MaxDate = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
             this.dtp_desde.Name = "dtp_desde";
-            this.dtp_desde.Size = new System.Drawing.Size(120, 20);
+            this.dtp_desde.Size = new System.Drawing.Size(95, 20);
             this.dtp_desde.TabIndex = 9;
             this.dtp_desde.Value = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
             // 
             // dtp_hasta
             // 
-            this.dtp_hasta.CustomFormat = "dd/mm/yyyy";
-            this.dtp_hasta.Location = new System.Drawing.Point(77, 48);
+            this.dtp_hasta.CustomFormat = "dd\'/\'MM\'/\'yyyy";
+            this.dtp_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp_hasta.Location = new System.Drawing.Point(75, 48);
             this.dtp_hasta.MaxDate = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
             this.dtp_hasta.Name = "dtp_hasta";
-            this.dtp_hasta.Size = new System.Drawing.Size(120, 20);
+            this.dtp_hasta.Size = new System.Drawing.Size(95, 20);
             this.dtp_hasta.TabIndex = 11;
             this.dtp_hasta.Value = new System.DateTime(2017, 9, 29, 0, 0, 0, 0);
             // 
             // lbl_hasta
             // 
             this.lbl_hasta.AutoSize = true;
-            this.lbl_hasta.Location = new System.Drawing.Point(30, 50);
+            this.lbl_hasta.Location = new System.Drawing.Point(28, 50);
             this.lbl_hasta.Name = "lbl_hasta";
             this.lbl_hasta.Size = new System.Drawing.Size(38, 13);
             this.lbl_hasta.TabIndex = 10;
