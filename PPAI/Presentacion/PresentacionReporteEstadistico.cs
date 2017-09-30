@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using MedidoresDeAgua;
 
@@ -46,18 +47,21 @@ namespace Presentacion
             {
                 var zona = new Zona($"Zona {i + 1}");
 
+                Thread.Sleep(20);
                 var propiedades = new Random().Next(5, 10);
 
                 for (var j = 0; j < propiedades; j++)
                 {
                     var propiedad = new Propiedad();
 
+                    Thread.Sleep(20);
                     var categoria = new Categoria($"Categoría {new Random().Next(1, 10)}");
 
                     var servicio = new Servicio(categoria);
 
                     propiedad.ContratarServicio(servicio);
 
+                    Thread.Sleep(20);
                     var facturas = new Random().Next(5, 10);
 
                     for (var k = 0; k < facturas; k++)
@@ -66,8 +70,10 @@ namespace Presentacion
 
                         var periodo = new PeriodoFacturacion(vencimiento.AddMonths(-1), vencimiento);
 
+                        Thread.Sleep(20);
                         var diasLectura = new Random().Next(1, 31);
 
+                        Thread.Sleep(20);
                         var m3Consumidos = (double)decimal.Round((decimal)new Random().NextDouble() * 100, Decimales);
 
                         var factura = new Factura(diasLectura, m3Consumidos, periodo);
@@ -94,7 +100,7 @@ namespace Presentacion
 
         private void btn_generar_Click(object sender, EventArgs e)
         {
-            tb_estadisticas.Text = string.Empty;
+            grafico.Series.Clear();
 
             if (ValidarFormulario())
             {
@@ -138,11 +144,18 @@ namespace Presentacion
 
                 foreach (var estadistica in estadisticas)
                 {
-                    tb_estadisticas.Lines = tb_estadisticas.Lines.Concat(estadistica.Lineas()).ToArray();
+                    var serie = estadistica.Zona;
+                    grafico.Series.Add(serie);
+
+                    foreach (var consumos in estadistica.ConsumosPorCategoria)
+                    {
+                        var categoria = int.Parse(consumos.Categoria.Split(' ')[1]);
+                        var consumo = consumos.Consumos.Average();
+                        grafico.Series[estadistica.Zona].Points.Add(categoria, consumo);
+                    }
                 }
 
-                lbl_estadisticas.Visible = true;
-                tb_estadisticas.Visible = true;
+                grafico.Visible = true;
             }
         }
 
