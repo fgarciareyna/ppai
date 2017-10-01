@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MedidoresDeAgua.Resultados;
 
 namespace MedidoresDeAgua.Dominio
@@ -37,36 +36,26 @@ namespace MedidoresDeAgua.Dominio
 
             foreach (var categoria in categorias)
             {
+                var consumo = new ConsumosPorCategoriaResultado
+                {
+                    Categoria = categoria,
+                    Consumos = new List<double>()
+                };
+
                 foreach (var servicio in Servicios)
                 {
-                    if (servicio.EsDeCategoria(categoria))
+                    if (servicio.EsDeCategoria(categoria) && servicio.EsServicioDePeriodo(fechaInicio, fechaFin))
                     {
-                        if (servicio.EsServicioDePeriodo(fechaInicio, fechaFin))
-                        {
-                            var consumo = servicio.ObtenerConsumosPeriodo(fechaInicio, fechaFin);
+                        var consumosPeriodo = servicio.ObtenerConsumosPeriodo(fechaInicio, fechaFin);
 
-                            consumos.Add(new ConsumosPorCategoriaResultado
-                            {
-                                Categoria = categoria,
-                                Consumos = consumo
-                            });
-                        }
+                        consumo.Consumos.AddRange(consumosPeriodo);
                     }
                 }
+
+                consumos.Add(consumo);
             }
 
             return consumos;
-
-            /*return (from categoria in categorias
-                from servicio in Servicios
-                where servicio.EsDeCategoria(categoria) && servicio.EsServicioDePeriodo(fechaInicio, fechaFin)
-                let consumos = servicio.ObtenerConsumosPeriodo(fechaInicio, fechaFin)
-                select new ConsumosPorCategoriaResultado()
-                {
-                    Categoria = categoria,
-                    Consumos = consumos
-                })
-                .ToList();*/
         }
     }
 }

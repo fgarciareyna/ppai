@@ -44,33 +44,33 @@ namespace MedidoresDeAgua.Dominio
         {
             var consumosSinPromediar = new List<ConsumosPorCategoriaResultado>();
 
-            foreach (var propiedad in Propiedades)
-            {
-                consumosSinPromediar.AddRange(propiedad.ObtenerConsumosPeriodoPorCategoria(fechaInicio, fechaFin, categorias));
-            }
-
-            var consumosPromediados = new List<PromedioPorCategoriaResultado>();
-
             foreach (var categoria in categorias)
             {
-                var consumosLista = consumosSinPromediar.Where(c => c.Categoria.Equals(categoria)).Select(c => c.Consumos).ToList();
-
-                if (consumosLista.Count == 0)
-                    continue;
-
-                var consumos = new List<double>();
-
-                foreach (var consumo in consumosLista)
-                {
-                    consumos.AddRange(consumo);
-                }
-
-                consumosPromediados.Add(new PromedioPorCategoriaResultado
+                consumosSinPromediar.Add(new ConsumosPorCategoriaResultado
                 {
                     Categoria = categoria,
-                    Promedio = consumos.Average()
+                    Consumos = new List<double>()
                 });
             }
+
+            foreach (var propiedad in Propiedades)
+            {
+                var consumos = propiedad.ObtenerConsumosPeriodoPorCategoria(fechaInicio, fechaFin, categorias);
+
+                foreach (var consumo in consumos)
+                {
+                    consumosSinPromediar.Single(c => c.Categoria == consumo.Categoria)
+                        .Consumos
+                        .AddRange(consumo.Consumos);
+                }
+            }
+
+            var consumosPromediados = consumosSinPromediar
+                .Select(c => new PromedioPorCategoriaResultado
+                {
+                    Categoria = c.Categoria,
+                    Promedio = c.Consumos.Count > 0 ? c.Consumos.Average() : 0
+                }).ToList();
 
             return new ConsumosPorCategoriaYZonaResultado()
             {

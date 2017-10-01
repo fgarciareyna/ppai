@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using MedidoresDeAgua;
 
 namespace Presentacion
@@ -151,7 +152,7 @@ namespace Presentacion
                     {
                         var categoria = int.Parse(consumos.Categoria.Split(' ')[1]);
                         var consumo = consumos.Promedio;
-                        grafico.Series[estadistica.Zona].Points.Add(categoria, consumo);
+                        grafico.Series[serie].Points.Add(new DataPoint(categoria, consumo));
                     }
                 }
 
