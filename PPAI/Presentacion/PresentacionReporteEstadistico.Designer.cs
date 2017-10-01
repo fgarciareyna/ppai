@@ -168,6 +168,7 @@
             // grafico
             // 
             chartArea1.AxisX.Title = "Categorías";
+            chartArea1.AxisY.Title = "Promedio de m3 consumidos";
             chartArea1.Name = "Area1";
             this.grafico.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";

@@ -17,11 +17,11 @@ namespace Presentacion
         {
             InitializeComponent();
 
+            dtp_desde.MaxDate = DateTime.Today.AddMonths(-1).AddDays(-1);
+            dtp_hasta.MaxDate = DateTime.Today.AddDays(-1);
+
             dtp_desde.Value = DateTime.Today.AddMonths(-1).AddDays(-1);
             dtp_hasta.Value = DateTime.Today.AddDays(-1);
-
-            dtp_desde.MaxDate = DateTime.Today.AddMonths(-1);
-            dtp_hasta.MaxDate = DateTime.Today;
 
             cb_metodos_estadisticos.Items.Add("Sumatoria");
             cb_metodos_estadisticos.Items.Add("Promedio Normalizado");
@@ -147,10 +147,10 @@ namespace Presentacion
                     var serie = estadistica.Zona;
                     grafico.Series.Add(serie);
 
-                    foreach (var consumos in estadistica.ConsumosPorCategoria)
+                    foreach (var consumos in estadistica.PromediosPorCategoria)
                     {
                         var categoria = int.Parse(consumos.Categoria.Split(' ')[1]);
-                        var consumo = consumos.Consumos.Average();
+                        var consumo = consumos.Promedio;
                         grafico.Series[estadistica.Zona].Points.Add(categoria, consumo);
                     }
                 }

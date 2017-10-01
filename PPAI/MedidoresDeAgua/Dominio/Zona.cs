@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MedidoresDeAgua.Resultados;
 
 namespace MedidoresDeAgua.Dominio
@@ -41,17 +42,40 @@ namespace MedidoresDeAgua.Dominio
         public ConsumosPorCategoriaYZonaResultado ObtenerConsumosPeriodoPorCategoria(DateTime fechaInicio,
             DateTime fechaFin, List<string> categorias)
         {
-            var consumosPorCategoria = new List<ConsumosPorCategoriaResultado>();
+            var consumosSinPromediar = new List<ConsumosPorCategoriaResultado>();
 
             foreach (var propiedad in Propiedades)
             {
-                consumosPorCategoria.AddRange(propiedad.ObtenerConsumosPeriodoPorCategoria(fechaInicio, fechaFin, categorias));
+                consumosSinPromediar.AddRange(propiedad.ObtenerConsumosPeriodoPorCategoria(fechaInicio, fechaFin, categorias));
+            }
+
+            var consumosPromediados = new List<PromedioPorCategoriaResultado>();
+
+            foreach (var categoria in categorias)
+            {
+                var consumosLista = consumosSinPromediar.Where(c => c.Categoria.Equals(categoria)).Select(c => c.Consumos).ToList();
+
+                if (consumosLista.Count == 0)
+                    continue;
+
+                var consumos = new List<double>();
+
+                foreach (var consumo in consumosLista)
+                {
+                    consumos.AddRange(consumo);
+                }
+
+                consumosPromediados.Add(new PromedioPorCategoriaResultado
+                {
+                    Categoria = categoria,
+                    Promedio = consumos.Average()
+                });
             }
 
             return new ConsumosPorCategoriaYZonaResultado()
             {
                 Zona = Nombre,
-                ConsumosPorCategoria = consumosPorCategoria
+                PromediosPorCategoria = consumosPromediados
             };
         }
     }
