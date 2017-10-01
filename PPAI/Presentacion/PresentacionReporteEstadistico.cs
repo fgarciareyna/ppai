@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -14,26 +15,20 @@ namespace Presentacion
         private const int Decimales = 3;
         private List<Zona> _zonas;
 
-        public PresentacionReporteEstadistico()
+        private void estadísticasDeConsumoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
-
-            dtp_desde.MaxDate = DateTime.Today.AddMonths(-1).AddDays(-1);
-            dtp_hasta.MaxDate = DateTime.Today.AddDays(-1);
-
-            dtp_desde.Value = DateTime.Today.AddMonths(-1).AddDays(-1);
-            dtp_hasta.Value = DateTime.Today.AddDays(-1);
-
-            cb_metodos_estadisticos.Items.Add("Sumatoria");
-            cb_metodos_estadisticos.Items.Add("Promedio Normalizado");
-            cb_metodos_estadisticos.Items.Add("Media con desviación estándar");
-
-            for (var i = 0; i < 10; i++)
-            {
-                clb_categorias.Items.Add($"Categoría {i + 1}", true);
-            }
-
-            GenerarDatos();
+            lbl_desde.Visible = true;
+            dtp_desde.Visible = true;
+            lbl_hasta.Visible = true;
+            dtp_hasta.Visible = true;
+            lbl_categorias.Visible = true;
+            clb_categorias.Visible = true;
+            lbl_zonas.Visible = true;
+            clb_zonas.Visible = true;
+            lbl_metodos_estadisticos.Visible = true;
+            cb_metodos_estadisticos.Visible = true;
+            btn_actualizar.Visible = true;
+            btn_generar.Visible = true;
         }
 
         private void GenerarDatos()
@@ -67,7 +62,7 @@ namespace Presentacion
 
                     for (var k = 0; k < facturas; k++)
                     {
-                        var vencimiento = DateTime.Today.AddMonths(-k);
+                        var vencimiento = DateTime.Today.AddMonths(-k).AddDays(-1);
 
                         var periodo = new PeriodoFacturacion(vencimiento.AddMonths(-1), vencimiento);
 
@@ -94,9 +89,105 @@ namespace Presentacion
             }
         }
 
+        public PresentacionReporteEstadistico()
+        {
+            InitializeComponent();
+
+            dtp_desde.MaxDate = DateTime.Today.AddMonths(-1).AddDays(-1);
+            dtp_hasta.MaxDate = DateTime.Today.AddDays(-1);
+
+            dtp_desde.Value = DateTime.Today.AddMonths(-1).AddDays(-1);
+            dtp_hasta.Value = DateTime.Today.AddDays(-1);
+
+            dtp_desde.MinDate = DateTime.Today.AddMonths(-11);
+            dtp_hasta.MinDate = dtp_desde.Value;
+
+            cb_metodos_estadisticos.Items.Add("Sumatoria");
+            cb_metodos_estadisticos.Items.Add("Promedio Normalizado");
+            cb_metodos_estadisticos.Items.Add("Media con desviación estándar");
+
+            for (var i = 0; i < 10; i++)
+            {
+                clb_categorias.Items.Add($"Categoría {i + 1}", true);
+            }
+
+            GenerarDatos();
+        }
+
         private void btn_actualizar_Click(object sender, EventArgs e)
         {
             GenerarDatos();
+        }
+
+        private void dtp_desde_ValueChanged(object sender, EventArgs e)
+        {
+            dtp_hasta.MinDate = dtp_desde.Value;
+        }
+
+        private void dtp_hasta_ValueChanged(object sender, EventArgs e)
+        {
+            dtp_desde.MaxDate = dtp_hasta.Value;
+        }
+
+        private void HabilitarBoton()
+        {
+            if (cb_metodos_estadisticos.SelectedItem != null
+                && clb_categorias.CheckedItems.Count > 0
+                && clb_zonas.CheckedItems.Count > 0)
+            {
+                btn_generar.Enabled = true;
+            }
+            else
+            {
+                btn_generar.Enabled = false;
+            }
+        }
+
+        private void cb_metodos_estadisticos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HabilitarBoton();
+        }
+
+        private void clb_categorias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HabilitarBoton();
+        }
+
+        private void clb_zonas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HabilitarBoton();
+        }
+
+        private bool ValidarFormulario()
+        {
+            if (dtp_desde.Value > dtp_hasta.Value)
+            {
+                MessageBox.Show(@"La fecha desde debe ser menor a la fecha hasta");
+
+                dtp_desde.Focus();
+
+                return false;
+            }
+
+            if (clb_categorias.CheckedItems.Count == 0)
+            {
+                MessageBox.Show(@"Debe seleccionar al menos una categoría");
+
+                clb_categorias.Focus();
+
+                return false;
+            }
+
+            if (clb_zonas.CheckedItems.Count == 0)
+            {
+                MessageBox.Show(@"Debe seleccionar al menos una zona");
+
+                clb_zonas.Focus();
+
+                return false;
+            }
+
+            return true;
         }
 
         private void btn_generar_Click(object sender, EventArgs e)
@@ -160,51 +251,35 @@ namespace Presentacion
             }
         }
 
-        private bool ValidarFormulario()
+        private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dtp_desde.Value > dtp_hasta.Value)
-            {
-                MessageBox.Show(@"La fecha desde debe ser menor a la fecha hasta");
+            var sb = new StringBuilder();
+            sb.Append("PPAI Entrega 4");
+            sb.Append("\n\n");
+            sb.Append("Caso de uso 123: Generar estadística de consumos");
+            sb.Append("\n\n");
+            sb.Append("Patrones: Strategy combinado con Singleton");
+            sb.Append("\n\n");
+            sb.Append("Grupo 5");
+            sb.Append("\n\n");
+            sb.Append("Integrantes:");
+            sb.Append("\n\t");
+            sb.Append("Dobratinich, Matías (57441)");
+            sb.Append("\n\t");
+            sb.Append("Heredia, Marcos (54048)");
+            sb.Append("\n\t");
+            sb.Append("García Reyna, Facundo (63583)");
+            sb.Append("\n\t");
+            sb.Append("Gersicich, Jeremías (70529)");
+            sb.Append("\n\t");
+            sb.Append("Guevara, Luciana (66410)");
 
-                dtp_desde.Focus();
-
-                return false;
-            }
-
-            if (clb_categorias.CheckedItems.Count == 0)
-            {
-                MessageBox.Show(@"Debe seleccionar al menos una categoría");
-
-                clb_categorias.Focus();
-
-                return false;
-            }
-
-            if (clb_zonas.CheckedItems.Count == 0)
-            {
-                MessageBox.Show(@"Debe seleccionar al menos una zona");
-
-                clb_zonas.Focus();
-
-                return false;
-            }
-
-            return true;
+            MessageBox.Show(sb.ToString());
         }
 
-        private void dtp_desde_ValueChanged(object sender, EventArgs e)
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dtp_hasta.MinDate = dtp_desde.Value;
-        }
-
-        private void dtp_hasta_ValueChanged(object sender, EventArgs e)
-        {
-            dtp_desde.MaxDate = dtp_hasta.Value;
-        }
-
-        private void cb_metodos_estadisticos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btn_generar.Enabled = true;
+            Close();
         }
     }
 }
