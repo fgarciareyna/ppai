@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -9,6 +10,8 @@ namespace Presentacion
 {
     public partial class Reporte : Form
     {
+        private const int Decimales = 2;
+
         public Reporte(List<ConsumosPorCategoriaYZonaResultado> estadisticas)
         {
             InitializeComponent();
@@ -67,6 +70,14 @@ namespace Presentacion
                     var categoria = int.Parse(valores.Categoria.Split(' ')[1]);
                     var valor = valores.Valores[0];
                     grafico.Series[serie].Points.Add(new DataPoint(categoria, valor));
+
+                    if (valores.Valores.Count > 1 && valores.Valores[1] > 0)
+                    {
+                        var desvEst = decimal.Round((decimal)valores.Valores[1], Decimales);
+
+                        var descripcion = desvEst.ToString();
+                        grafico.Series[serie].Points.Last().Label = descripcion;
+                    }
                 }
             }
 

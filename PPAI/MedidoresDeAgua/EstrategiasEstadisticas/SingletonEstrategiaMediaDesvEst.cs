@@ -28,21 +28,29 @@ namespace MedidoresDeAgua.EstrategiasEstadisticas
             {
                 foreach (var categoria in zona.ConsumosPorCategoria)
                 {
-                    categoria.Valores = new List<double>()
+                    categoria.Valores = new List<double>();
+
+                    var n = categoria.Consumos.Count;
+
+                    if (n == 0)
                     {
-                        categoria.Consumos.Count > 0
-                        ? categoria.Consumos.Average()
-                        : 0
-                    };
+                        categoria.Valores.Add(0);
+                        categoria.Valores.Add(0);
+                        continue;
+                    }
+
+                    var media = categoria.Consumos.Average();
+
+                    categoria.Valores.Add(media);
 
                     double diferenciaCuadrada = 0;
 
                     foreach (var consumo in categoria.Consumos)
                     {
-                        diferenciaCuadrada += Math.Pow(consumo - categoria.Valores[0], 2);
+                        diferenciaCuadrada += Math.Pow(consumo - media, 2);
                     }
 
-                    var desvEst = Math.Sqrt(diferenciaCuadrada / categoria.Consumos.Count);
+                    var desvEst = Math.Sqrt(diferenciaCuadrada / n);
 
                     categoria.Valores.Add(desvEst);
                 }

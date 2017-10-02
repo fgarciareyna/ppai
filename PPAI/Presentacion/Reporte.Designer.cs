@@ -40,6 +40,8 @@
             // 
             // grafico
             // 
+            this.grafico.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             chartArea1.AxisX.Title = "Categorías";
             chartArea1.AxisY.Title = "Promedio de m3 consumidos";
             chartArea1.Name = "Area1";
@@ -58,6 +60,9 @@
             // 
             // txt_estadisticas
             // 
+            this.txt_estadisticas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txt_estadisticas.Location = new System.Drawing.Point(12, 12);
             this.txt_estadisticas.Multiline = true;
             this.txt_estadisticas.Name = "txt_estadisticas";
@@ -69,6 +74,7 @@
             // 
             // btn_imprimir
             // 
+            this.btn_imprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_imprimir.Location = new System.Drawing.Point(662, 667);
             this.btn_imprimir.Name = "btn_imprimir";
             this.btn_imprimir.Size = new System.Drawing.Size(100, 23);
@@ -78,6 +84,7 @@
             // 
             // btn_exportar
             // 
+            this.btn_exportar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_exportar.Location = new System.Drawing.Point(556, 667);
             this.btn_exportar.Name = "btn_exportar";
             this.btn_exportar.Size = new System.Drawing.Size(100, 23);
@@ -96,6 +103,7 @@
             this.Controls.Add(this.grafico);
             this.Name = "Reporte";
             this.Text = "Reporte";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.grafico)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 5D);
             this.cb_metodos_estadisticos = new System.Windows.Forms.ComboBox();
             this.lbl_metodos_estadisticos = new System.Windows.Forms.Label();
             this.clb_zonas = new System.Windows.Forms.CheckedListBox();
@@ -188,18 +189,20 @@
             // 
             // grafico
             // 
-            chartArea6.AxisX.Title = "Categorías";
-            chartArea6.AxisY.Title = "Promedio de m3 consumidos";
-            chartArea6.Name = "Area1";
-            this.grafico.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.grafico.Legends.Add(legend6);
+            chartArea1.AxisX.Title = "Categorías";
+            chartArea1.AxisY.Title = "Promedio de m3 consumidos";
+            chartArea1.Name = "Area1";
+            this.grafico.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.grafico.Legends.Add(legend1);
             this.grafico.Location = new System.Drawing.Point(316, 130);
             this.grafico.Name = "grafico";
-            series6.ChartArea = "Area1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.grafico.Series.Add(series6);
+            series1.ChartArea = "Area1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            dataPoint1.Label = "8";
+            series1.Points.Add(dataPoint1);
+            this.grafico.Series.Add(series1);
             this.grafico.Size = new System.Drawing.Size(750, 345);
             this.grafico.TabIndex = 14;
             this.grafico.Visible = false;
