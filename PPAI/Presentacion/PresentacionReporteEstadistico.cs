@@ -258,8 +258,6 @@ namespace Presentacion
         private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var sb = new StringBuilder();
-            sb.Append("PPAI Entrega 4");
-            sb.Append("\n\n");
             sb.Append("Caso de uso 123: Generar estadística de consumos");
             sb.Append("\n\n");
             sb.Append("Patrones: Strategy combinado con Singleton");
@@ -278,7 +276,7 @@ namespace Presentacion
             sb.Append("\n\t");
             sb.Append("Guevara, Luciana (66410)");
 
-            MessageBox.Show(sb.ToString());
+            MessageBox.Show(sb.ToString(), @"PPAI Entrega 4");
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
