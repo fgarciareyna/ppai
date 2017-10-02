@@ -31,6 +31,11 @@ namespace MedidoresDeAgua.Dominio
             return Periodo.EsDePeriodo(fechaInicio, fechaFin);
         }
 
+        public double ObtenerConsumo()
+        {
+            return M3Consumidos;
+        }
+
         public double ObtenerConsumoNormalizado()
         {
             var consumoNormalizado = M3Consumidos / DiasDeLecturaFacturados * 30;

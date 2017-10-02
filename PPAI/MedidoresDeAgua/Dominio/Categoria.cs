@@ -16,9 +16,14 @@ namespace MedidoresDeAgua.Dominio
             Nombre = nombre;
         }
 
-        public bool EsCategoria(string categoria)
+        public bool EsCategoria(Categoria categoria)
         {
-            return Nombre.Equals(categoria);
+            return Nombre.Equals(categoria.Nombre);
+        }
+
+        public override string ToString()
+        {
+            return Nombre;
         }
     }
 }

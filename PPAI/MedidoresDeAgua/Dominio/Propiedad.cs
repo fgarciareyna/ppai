@@ -29,8 +29,8 @@ namespace MedidoresDeAgua.Dominio
             Servicios.Add(servicio);
         }
 
-        public List<ConsumosPorCategoriaResultado> ObtenerConsumosNormalizadosPorCategoria(DateTime fechaInicio, DateTime fechaFin,
-            List<string> categorias)
+        public List<ConsumosPorCategoriaResultado> ObtenerConsumosPorCategoria(DateTime fechaInicio, DateTime fechaFin,
+            List<Categoria> categorias)
         {
             var consumos = new List<ConsumosPorCategoriaResultado>();
 
@@ -38,7 +38,36 @@ namespace MedidoresDeAgua.Dominio
             {
                 var consumo = new ConsumosPorCategoriaResultado
                 {
-                    Categoria = categoria,
+                    Categoria = categoria.Nombre,
+                    Consumos = new List<double>()
+                };
+
+                foreach (var servicio in Servicios)
+                {
+                    if (servicio.EsDeCategoria(categoria) && servicio.EsServicioDePeriodo(fechaInicio, fechaFin))
+                    {
+                        var consumosPeriodo = servicio.ObtenerConsumos(fechaInicio, fechaFin);
+
+                        consumo.Consumos.AddRange(consumosPeriodo);
+                    }
+                }
+
+                consumos.Add(consumo);
+            }
+
+            return consumos;
+        }
+
+        public List<ConsumosPorCategoriaResultado> ObtenerConsumosNormalizadosPorCategoria(DateTime fechaInicio, DateTime fechaFin,
+            List<Categoria> categorias)
+        {
+            var consumos = new List<ConsumosPorCategoriaResultado>();
+
+            foreach (var categoria in categorias)
+            {
+                var consumo = new ConsumosPorCategoriaResultado
+                {
+                    Categoria = categoria.Nombre,
                     Consumos = new List<double>()
                 };
 

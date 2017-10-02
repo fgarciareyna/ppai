@@ -6,6 +6,5 @@ namespace MedidoresDeAgua.Resultados
     {
         public string Zona { get; set; }
         public List<ConsumosPorCategoriaResultado> ConsumosPorCategoria { get; set; }
-        public List<ValoresPorCategoriaResultado> ValoresPorCategoria { get; set; }
     }
 }

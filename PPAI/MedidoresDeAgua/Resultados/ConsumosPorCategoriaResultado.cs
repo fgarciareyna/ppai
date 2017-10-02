@@ -6,5 +6,6 @@ namespace MedidoresDeAgua.Resultados
     {
         public string Categoria { get; set; }
         public List<double> Consumos { get; set; }
+        public List<double> Valores { get; set; }
     }
 }

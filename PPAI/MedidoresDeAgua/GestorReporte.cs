@@ -10,11 +10,11 @@ namespace MedidoresDeAgua
     {
         public IEstrategiaEstadistica EstrategiaEstadistica { get; set; }
         public List<Zona> Zonas { get; set; }
-        public List<string> Categorias { get; set; }
+        public List<Categoria> Categorias { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
 
-        public GestorReporte(DateTime fechaInicio, DateTime fechaFin, List<string> categorias,
+        public GestorReporte(DateTime fechaInicio, DateTime fechaFin, List<Categoria> categorias,
             List<Zona> zonas)
         {
             FechaInicio = fechaInicio;

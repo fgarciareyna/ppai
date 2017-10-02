@@ -14,6 +14,7 @@ namespace Presentacion
     {
         private const int Decimales = 3;
         private List<Zona> _zonas;
+        private readonly List<Categoria> _categorias;
 
         private void estadísticasDeConsumoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -29,6 +30,34 @@ namespace Presentacion
             cb_metodos_estadisticos.Visible = true;
             btn_actualizar.Visible = true;
             btn_generar.Visible = true;
+        }
+
+        public PresentacionReporteEstadistico()
+        {
+            InitializeComponent();
+
+            dtp_desde.MaxDate = DateTime.Today.AddMonths(-1).AddDays(-1);
+            dtp_hasta.MaxDate = DateTime.Today.AddDays(-1);
+
+            dtp_desde.Value = DateTime.Today.AddMonths(-1).AddDays(-1);
+            dtp_hasta.Value = DateTime.Today.AddDays(-1);
+
+            dtp_desde.MinDate = DateTime.Today.AddMonths(-11);
+            dtp_hasta.MinDate = dtp_desde.Value;
+
+            cb_metodos_estadisticos.Items.Add("Sumatoria");
+            cb_metodos_estadisticos.Items.Add("Promedio Normalizado");
+            cb_metodos_estadisticos.Items.Add("Media con desviación estándar");
+
+            _categorias = new List<Categoria>();
+
+            for (var i = 0; i < 10; i++)
+            {
+                _categorias.Add(new Categoria($"Categoría {i + 1}"));
+                clb_categorias.Items.Add(_categorias[i], true);
+            }
+
+            GenerarDatos();
         }
 
         private void GenerarDatos()
@@ -51,7 +80,7 @@ namespace Presentacion
                     var propiedad = new Propiedad();
 
                     Thread.Sleep(20);
-                    var categoria = new Categoria($"Categoría {new Random().Next(1, 10)}");
+                    var categoria = _categorias[new Random().Next(0, 9)];
 
                     var servicio = new Servicio(categoria);
 
@@ -85,33 +114,8 @@ namespace Presentacion
 
             foreach (var zona in _zonas)
             {
-                clb_zonas.Items.Add(zona.Nombre, true);
+                clb_zonas.Items.Add(zona, true);
             }
-        }
-
-        public PresentacionReporteEstadistico()
-        {
-            InitializeComponent();
-
-            dtp_desde.MaxDate = DateTime.Today.AddMonths(-1).AddDays(-1);
-            dtp_hasta.MaxDate = DateTime.Today.AddDays(-1);
-
-            dtp_desde.Value = DateTime.Today.AddMonths(-1).AddDays(-1);
-            dtp_hasta.Value = DateTime.Today.AddDays(-1);
-
-            dtp_desde.MinDate = DateTime.Today.AddMonths(-11);
-            dtp_hasta.MinDate = dtp_desde.Value;
-
-            cb_metodos_estadisticos.Items.Add("Sumatoria");
-            cb_metodos_estadisticos.Items.Add("Promedio Normalizado");
-            cb_metodos_estadisticos.Items.Add("Media con desviación estándar");
-
-            for (var i = 0; i < 10; i++)
-            {
-                clb_categorias.Items.Add($"Categoría {i + 1}", true);
-            }
-
-            GenerarDatos();
         }
 
         private void btn_actualizar_Click(object sender, EventArgs e)
@@ -199,9 +203,11 @@ namespace Presentacion
                 var fechaInicio = dtp_desde.Value;
                 var fechaFin = dtp_hasta.Value;
 
-                var categorias = (from object item
+                var categoriasSeleccionadas = (from object item
                                   in clb_categorias.CheckedItems
                                   select item.ToString()).ToList();
+
+                var categorias = _categorias.Where(categoria => categoriasSeleccionadas.Contains(categoria.Nombre)).ToList();
 
                 var zonasSeleccionadas = (from object item
                                   in clb_zonas.CheckedItems
@@ -243,7 +249,7 @@ namespace Presentacion
                     var serie = estadistica.Zona;
                     grafico.Series.Add(serie);
 
-                    foreach (var valores in estadistica.ValoresPorCategoria)
+                    foreach (var valores in estadistica.ConsumosPorCategoria)
                     {
                         var categoria = int.Parse(valores.Categoria.Split(' ')[1]);
                         var valor = valores.Valores[0];

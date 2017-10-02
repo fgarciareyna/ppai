@@ -28,7 +28,7 @@ namespace MedidoresDeAgua.Dominio
             Facturas.Add(factura);
         }
 
-        public bool EsDeCategoria(string categoria)
+        public bool EsDeCategoria(Categoria categoria)
         {
             return Categoria.EsCategoria(categoria);
         }
@@ -36,6 +36,17 @@ namespace MedidoresDeAgua.Dominio
         public bool EsServicioDePeriodo(DateTime fechaInicio, DateTime fechaFin)
         {
             return Facturas.Any(f => f.EsDePeriodo(fechaInicio, fechaFin));
+        }
+
+        public List<double> ObtenerConsumos(DateTime fechaInicio, DateTime fechaFin)
+        {
+            var consumos = (
+                from factura in Facturas
+                where factura.EsDePeriodo(fechaInicio, fechaFin)
+                select factura.ObtenerConsumo())
+                .ToList();
+
+            return consumos;
         }
 
         public List<double> ObtenerConsumosNormalizados(DateTime fechaInicio, DateTime fechaFin)

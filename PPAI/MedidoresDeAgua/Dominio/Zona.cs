@@ -39,8 +39,8 @@ namespace MedidoresDeAgua.Dominio
             Propiedades.Add(propiedad);
         }
 
-        public ConsumosPorCategoriaYZonaResultado ObtenerConsumosNormalizadosPorCategoria(DateTime fechaInicio,
-            DateTime fechaFin, List<string> categorias)
+        public ConsumosPorCategoriaYZonaResultado ObtenerConsumosPorCategoria(DateTime fechaInicio,
+            DateTime fechaFin, List<Categoria> categorias)
         {
             var consumosPorCategoria = new List<ConsumosPorCategoriaResultado>();
 
@@ -48,7 +48,40 @@ namespace MedidoresDeAgua.Dominio
             {
                 consumosPorCategoria.Add(new ConsumosPorCategoriaResultado
                 {
-                    Categoria = categoria,
+                    Categoria = categoria.Nombre,
+                    Consumos = new List<double>()
+                });
+            }
+
+            foreach (var propiedad in Propiedades)
+            {
+                var consumos = propiedad.ObtenerConsumosPorCategoria(fechaInicio, fechaFin, categorias);
+
+                foreach (var consumo in consumos)
+                {
+                    consumosPorCategoria.Single(c => c.Categoria == consumo.Categoria)
+                        .Consumos
+                        .AddRange(consumo.Consumos);
+                }
+            }
+
+            return new ConsumosPorCategoriaYZonaResultado()
+            {
+                Zona = Nombre,
+                ConsumosPorCategoria = consumosPorCategoria
+            };
+        }
+
+        public ConsumosPorCategoriaYZonaResultado ObtenerConsumosNormalizadosPorCategoria(DateTime fechaInicio,
+            DateTime fechaFin, List<Categoria> categorias)
+        {
+            var consumosPorCategoria = new List<ConsumosPorCategoriaResultado>();
+
+            foreach (var categoria in categorias)
+            {
+                consumosPorCategoria.Add(new ConsumosPorCategoriaResultado
+                {
+                    Categoria = categoria.Nombre,
                     Consumos = new List<double>()
                 });
             }
@@ -70,6 +103,11 @@ namespace MedidoresDeAgua.Dominio
                 Zona = Nombre,
                 ConsumosPorCategoria = consumosPorCategoria
             };
+        }
+
+        public override string ToString()
+        {
+            return Nombre;
         }
     }
 }

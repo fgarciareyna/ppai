@@ -62,7 +62,7 @@ namespace Presentacion
                 var serie = estadistica.Zona;
                 grafico.Series.Add(serie);
 
-                foreach (var valores in estadistica.ValoresPorCategoria)
+                foreach (var valores in estadistica.ConsumosPorCategoria)
                 {
                     var categoria = int.Parse(valores.Categoria.Split(' ')[1]);
                     var valor = valores.Valores[0];

@@ -18,7 +18,7 @@ namespace MedidoresDeAgua.EstrategiasEstadisticas
         }
 
         public List<ConsumosPorCategoriaYZonaResultado> CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin,
-            List<string> categorias, List<Zona> zonas)
+            List<Categoria> categorias, List<Zona> zonas)
         {
             var consumosPorZona = zonas.Select(
                 zona => zona.ObtenerConsumosNormalizadosPorCategoria(fechaInicio, fechaFin, categorias))
@@ -26,20 +26,14 @@ namespace MedidoresDeAgua.EstrategiasEstadisticas
 
             foreach (var zona in consumosPorZona)
             {
-                zona.ValoresPorCategoria = new List<ValoresPorCategoriaResultado>();
-
                 foreach (var categoria in zona.ConsumosPorCategoria)
                 {
-                    zona.ValoresPorCategoria.Add(new ValoresPorCategoriaResultado
+                    categoria.Valores = new List<double>()
                     {
-                        Categoria = categoria.Categoria,
-                        Valores = new List<double>()
-                        {
-                            categoria.Consumos.Count > 0
-                            ? categoria.Consumos.Average()
-                            : 0
-                        }
-                    });
+                        categoria.Consumos.Count > 0
+                        ? categoria.Consumos.Average()
+                        : 0
+                    };
                 }
             }
 
