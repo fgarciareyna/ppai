@@ -29,7 +29,7 @@ namespace MedidoresDeAgua.Dominio
             Servicios.Add(servicio);
         }
 
-        public List<ConsumosPorCategoriaResultado> ObtenerConsumosPeriodoPorCategoria(DateTime fechaInicio, DateTime fechaFin,
+        public List<ConsumosPorCategoriaResultado> ObtenerConsumosNormalizadosPorCategoria(DateTime fechaInicio, DateTime fechaFin,
             List<string> categorias)
         {
             var consumos = new List<ConsumosPorCategoriaResultado>();
@@ -46,7 +46,7 @@ namespace MedidoresDeAgua.Dominio
                 {
                     if (servicio.EsDeCategoria(categoria) && servicio.EsServicioDePeriodo(fechaInicio, fechaFin))
                     {
-                        var consumosPeriodo = servicio.ObtenerConsumosPeriodo(fechaInicio, fechaFin);
+                        var consumosPeriodo = servicio.ObtenerConsumosNormalizados(fechaInicio, fechaFin);
 
                         consumo.Consumos.AddRange(consumosPeriodo);
                     }

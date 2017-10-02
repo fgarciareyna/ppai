@@ -234,16 +234,20 @@ namespace Presentacion
 
                 var estadisticas = gestor.TomarConfirmacion();
 
+                var reporte = new Reporte(estadisticas);
+
+                reporte.Show();
+
                 foreach (var estadistica in estadisticas)
                 {
                     var serie = estadistica.Zona;
                     grafico.Series.Add(serie);
 
-                    foreach (var consumos in estadistica.PromediosPorCategoria)
+                    foreach (var valores in estadistica.ValoresPorCategoria)
                     {
-                        var categoria = int.Parse(consumos.Categoria.Split(' ')[1]);
-                        var consumo = consumos.Promedio;
-                        grafico.Series[serie].Points.Add(new DataPoint(categoria, consumo));
+                        var categoria = int.Parse(valores.Categoria.Split(' ')[1]);
+                        var valor = valores.Valores[0];
+                        grafico.Series[serie].Points.Add(new DataPoint(categoria, valor));
                     }
                 }
 

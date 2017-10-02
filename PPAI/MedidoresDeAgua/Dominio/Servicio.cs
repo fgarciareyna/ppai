@@ -38,7 +38,7 @@ namespace MedidoresDeAgua.Dominio
             return Facturas.Any(f => f.EsDePeriodo(fechaInicio, fechaFin));
         }
 
-        public List<double> ObtenerConsumosPeriodo(DateTime fechaInicio, DateTime fechaFin)
+        public List<double> ObtenerConsumosNormalizados(DateTime fechaInicio, DateTime fechaFin)
         {
             var consumos = (
                 from factura in Facturas

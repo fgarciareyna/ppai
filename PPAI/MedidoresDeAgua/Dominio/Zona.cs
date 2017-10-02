@@ -39,14 +39,14 @@ namespace MedidoresDeAgua.Dominio
             Propiedades.Add(propiedad);
         }
 
-        public ConsumosPorCategoriaYZonaResultado ObtenerConsumosPeriodoPorCategoria(DateTime fechaInicio,
+        public ConsumosPorCategoriaYZonaResultado ObtenerConsumosNormalizadosPorCategoria(DateTime fechaInicio,
             DateTime fechaFin, List<string> categorias)
         {
-            var consumosSinPromediar = new List<ConsumosPorCategoriaResultado>();
+            var consumosPorCategoria = new List<ConsumosPorCategoriaResultado>();
 
             foreach (var categoria in categorias)
             {
-                consumosSinPromediar.Add(new ConsumosPorCategoriaResultado
+                consumosPorCategoria.Add(new ConsumosPorCategoriaResultado
                 {
                     Categoria = categoria,
                     Consumos = new List<double>()
@@ -55,27 +55,20 @@ namespace MedidoresDeAgua.Dominio
 
             foreach (var propiedad in Propiedades)
             {
-                var consumos = propiedad.ObtenerConsumosPeriodoPorCategoria(fechaInicio, fechaFin, categorias);
+                var consumos = propiedad.ObtenerConsumosNormalizadosPorCategoria(fechaInicio, fechaFin, categorias);
 
                 foreach (var consumo in consumos)
                 {
-                    consumosSinPromediar.Single(c => c.Categoria == consumo.Categoria)
+                    consumosPorCategoria.Single(c => c.Categoria == consumo.Categoria)
                         .Consumos
                         .AddRange(consumo.Consumos);
                 }
             }
 
-            var consumosPromediados = consumosSinPromediar
-                .Select(c => new PromedioPorCategoriaResultado
-                {
-                    Categoria = c.Categoria,
-                    Promedio = c.Consumos.Count > 0 ? c.Consumos.Average() : 0
-                }).ToList();
-
             return new ConsumosPorCategoriaYZonaResultado()
             {
                 Zona = Nombre,
-                PromediosPorCategoria = consumosPromediados
+                ConsumosPorCategoria = consumosPorCategoria
             };
         }
     }

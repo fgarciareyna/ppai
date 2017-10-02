@@ -55,7 +55,7 @@
     <Compile Include="Dominio\Zona.cs" />
     <Compile Include="Resultados\ConsumosPorCategoriaResultado.cs" />
     <Compile Include="Resultados\ConsumosPorCategoriaYZonaResultado.cs" />
-    <Compile Include="Resultados\PromedioPorCategoriaResultado.cs" />
+    <Compile Include="Resultados\ValoresPorCategoriaResultado.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
