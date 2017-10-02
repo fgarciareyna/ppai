@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grafico = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.txt_estadisticas = new System.Windows.Forms.TextBox();
             this.btn_imprimir = new System.Windows.Forms.Button();
@@ -42,18 +42,18 @@
             // 
             this.grafico.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.AxisX.Title = "Categorías";
-            chartArea1.AxisY.Title = "Promedio de m3 consumidos";
-            chartArea1.Name = "Area1";
-            this.grafico.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.grafico.Legends.Add(legend1);
+            chartArea2.AxisX.Title = "Categorías";
+            chartArea2.AxisY.Title = "Promedio de m3 consumidos";
+            chartArea2.Name = "Area1";
+            this.grafico.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.grafico.Legends.Add(legend2);
             this.grafico.Location = new System.Drawing.Point(12, 316);
             this.grafico.Name = "grafico";
-            series1.ChartArea = "Area1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.grafico.Series.Add(series1);
+            series2.ChartArea = "Area1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.grafico.Series.Add(series2);
             this.grafico.Size = new System.Drawing.Size(750, 345);
             this.grafico.TabIndex = 15;
             this.grafico.Visible = false;
@@ -81,6 +81,7 @@
             this.btn_imprimir.TabIndex = 17;
             this.btn_imprimir.Text = "Imprimir";
             this.btn_imprimir.UseVisualStyleBackColor = true;
+            this.btn_imprimir.Click += new System.EventHandler(this.btn_imprimir_Click);
             // 
             // btn_exportar
             // 
@@ -91,6 +92,7 @@
             this.btn_exportar.TabIndex = 18;
             this.btn_exportar.Text = "Exportar a Excel";
             this.btn_exportar.UseVisualStyleBackColor = true;
+            this.btn_exportar.Click += new System.EventHandler(this.btn_exportar_Click);
             // 
             // Reporte
             // 
