@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.Windows.Forms.VisualStyles;
 using MedidoresDeAgua.Resultados;
+using Microsoft.Office.Interop.Excel;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace Presentacion
 {
@@ -116,13 +117,15 @@ namespace Presentacion
 
         private void btn_exportar_Click(object sender, EventArgs e)
         {
-            Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
+            _Application excel = new Application();
+            _Workbook workbook = excel.Workbooks.Add(Type.Missing);
 
             try
             {
-                Microsoft.Office.Interop.Excel._Worksheet worksheet = workbook.ActiveSheet;
+                _Worksheet worksheet = workbook.ActiveSheet;
                 worksheet.Name = "Consumos";
+
+                worksheet.Visible = XlSheetVisibility.xlSheetVisible;
                 
                 var filaActual = 1;
 
@@ -155,11 +158,19 @@ namespace Presentacion
                         }
                         filaActual++;
 
-                        worksheet.Range[worksheet.Cells[filaCategoria, 2], worksheet.Cells[filaActual-2, 2]].Merge();
-                        worksheet.Range[worksheet.Cells[filaCategoria, 2]].VerticalAlignment = VerticalAlignment.Center;
+                        var rangoCategoria = worksheet.Range[
+                            worksheet.Cells[filaCategoria, 2],
+                            worksheet.Cells[filaActual - 2, 2]];
+
+                        rangoCategoria.Merge();
+                        rangoCategoria.VerticalAlignment = XlVAlign.xlVAlignCenter;
                     }
-                    worksheet.Range[worksheet.Cells[filaZona, 1], worksheet.Cells[filaActual-1, 1]].Merge();
-                    worksheet.Range[worksheet.Cells[filaZona, 1]].VerticalAlignment = VerticalAlignment.Center;
+                    var rangoZona = worksheet.Range[
+                        worksheet.Cells[filaZona, 1],
+                        worksheet.Cells[filaActual - 1, 1]];
+
+                    rangoZona.Merge();
+                    rangoZona.VerticalAlignment = XlVAlign.xlVAlignCenter;
                 }
 
                 var saveDialog = new SaveFileDialog
