@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
@@ -15,11 +14,11 @@ namespace Presentacion
     public partial class Reporte : Form
     {
         private const int Decimales = 2;
-        private readonly List<ConsumosPorCategoriaYZonaResultado> _estadisticas;
+        private readonly EstadisticaResultado _estadisticas;
         private readonly PrintDocument _reporte = new PrintDocument();
         private Bitmap _imagen;
 
-        public Reporte(List<ConsumosPorCategoriaYZonaResultado> estadisticas)
+        public Reporte(EstadisticaResultado estadisticas)
         {
             InitializeComponent();
 
@@ -38,7 +37,7 @@ namespace Presentacion
 
             var sb = new StringBuilder();
 
-            foreach (var estadistica in _estadisticas)
+            foreach (var estadistica in _estadisticas.ConsumosPorCategoriaYZona)
             {
                 sb.Append($"{estadistica.Zona}:");
                 sb.Append(Environment.NewLine);
@@ -71,7 +70,9 @@ namespace Presentacion
         {
             grafico.Series.Clear();
 
-            foreach (var estadistica in _estadisticas)
+            grafico.ChartAreas[0].AxisY.Title = $"{_estadisticas.Parametros[0]} (m3)";
+
+            foreach (var estadistica in _estadisticas.ConsumosPorCategoriaYZona)
             {
                 var serie = estadistica.Zona;
                 grafico.Series.Add(serie);
@@ -122,18 +123,70 @@ namespace Presentacion
 
             try
             {
-                _Worksheet worksheet = workbook.ActiveSheet;
-                worksheet.Name = "Consumos";
-
-                worksheet.Visible = XlSheetVisibility.xlSheetVisible;
+                _Worksheet hojaEstadisticas = workbook.ActiveSheet;
+                hojaEstadisticas.Name = "Estadísticas";
                 
                 var filaActual = 1;
+                var columnaActual = 3;
 
-                foreach (var zona in _estadisticas)
+                hojaEstadisticas.Cells[filaActual, 1] = "Zonas";
+                hojaEstadisticas.Cells[filaActual, 2] = "Categorías";
+
+                foreach (var parametro in _estadisticas.Parametros)
+                {
+                    hojaEstadisticas.Cells[filaActual, columnaActual] = parametro;
+                    columnaActual++;
+                }
+
+                filaActual++;
+
+                foreach (var zona in _estadisticas.ConsumosPorCategoriaYZona)
                 {
                     var filaZona = filaActual;
 
-                    worksheet.Cells[filaActual, 1] = zona.Zona;
+                    hojaEstadisticas.Cells[filaActual, 1] = zona.Zona;
+
+                    foreach (var categoria in zona.ConsumosPorCategoria)
+                    {
+                        if (categoria.Consumos.Count == 0)
+                            continue;
+
+                        hojaEstadisticas.Cells[filaActual, 2] = categoria.Categoria;
+
+                        columnaActual = 3;
+
+                        foreach (var valor in categoria.Valores)
+                        {
+                            hojaEstadisticas.Cells[filaActual, columnaActual] = valor;
+                            columnaActual++;
+                        }
+                        filaActual++;
+                    }
+                    var rangoZona = hojaEstadisticas.Range[
+                        hojaEstadisticas.Cells[filaZona, 1],
+                        hojaEstadisticas.Cells[filaActual - 1, 1]];
+
+                    rangoZona.Merge();
+                    rangoZona.VerticalAlignment = XlVAlign.xlVAlignCenter;
+                }
+
+                workbook.Sheets.Add();
+                _Worksheet hojaConsumos = workbook.Sheets[1];
+                hojaConsumos.Name = "Consumos";
+
+                filaActual = 1;
+
+                hojaConsumos.Cells[filaActual, 1] = "Zonas";
+                hojaConsumos.Cells[filaActual, 2] = "Categorías";
+                hojaConsumos.Cells[filaActual, 3] = "Consumos";
+
+                filaActual++;
+
+                foreach (var zona in _estadisticas.ConsumosPorCategoriaYZona)
+                {
+                    var filaZona = filaActual;
+
+                    hojaConsumos.Cells[filaActual, 1] = zona.Zona;
 
                     foreach (var categoria in zona.ConsumosPorCategoria)
                     {
@@ -142,32 +195,24 @@ namespace Presentacion
 
                         var filaCategoria = filaActual;
 
-                        worksheet.Cells[filaActual, 2] = categoria.Categoria;
+                        hojaConsumos.Cells[filaActual, 2] = categoria.Categoria;
 
                         foreach (var consumo in categoria.Consumos)
                         {
-                            worksheet.Cells[filaActual, 3] = consumo;
+                            hojaConsumos.Cells[filaActual, 3] = consumo;
                             filaActual++;
                         }
-                        worksheet.Cells[filaActual, 2] = "Resultado";
-                        worksheet.Cells[filaActual, 3] = categoria.Valores[0];
 
-                        if (categoria.Valores.Count > 1 && categoria.Valores[1] > 0)
-                        {
-                            worksheet.Cells[filaActual, 4] = categoria.Valores[1];
-                        }
-                        filaActual++;
-
-                        var rangoCategoria = worksheet.Range[
-                            worksheet.Cells[filaCategoria, 2],
-                            worksheet.Cells[filaActual - 2, 2]];
+                        var rangoCategoria = hojaConsumos.Range[
+                            hojaConsumos.Cells[filaCategoria, 2],
+                            hojaConsumos.Cells[filaActual - 1, 2]];
 
                         rangoCategoria.Merge();
                         rangoCategoria.VerticalAlignment = XlVAlign.xlVAlignCenter;
                     }
-                    var rangoZona = worksheet.Range[
-                        worksheet.Cells[filaZona, 1],
-                        worksheet.Cells[filaActual - 1, 1]];
+                    var rangoZona = hojaConsumos.Range[
+                        hojaConsumos.Cells[filaZona, 1],
+                        hojaConsumos.Cells[filaActual - 1, 1]];
 
                     rangoZona.Merge();
                     rangoZona.VerticalAlignment = XlVAlign.xlVAlignCenter;

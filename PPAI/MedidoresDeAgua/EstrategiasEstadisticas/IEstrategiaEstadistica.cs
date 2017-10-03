@@ -7,6 +7,6 @@ namespace MedidoresDeAgua.EstrategiasEstadisticas
 {
     public interface IEstrategiaEstadistica
     {
-        List<ConsumosPorCategoriaYZonaResultado> CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin, List<Categoria> categorias, List<Zona> zonas);
+        EstadisticaResultado CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin, List<Categoria> categorias, List<Zona> zonas);
     }
 }

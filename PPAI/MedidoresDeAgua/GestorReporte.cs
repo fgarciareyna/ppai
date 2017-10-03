@@ -41,12 +41,12 @@ namespace MedidoresDeAgua
             }
         }
 
-        public List<ConsumosPorCategoriaYZonaResultado> TomarConfirmacion()
+        public EstadisticaResultado TomarConfirmacion()
         {
             return CalcularEstadisticas();
         }
 
-        private List<ConsumosPorCategoriaYZonaResultado> CalcularEstadisticas()
+        private EstadisticaResultado CalcularEstadisticas()
         {
             return EstrategiaEstadistica.CalcularEstadisticas(FechaInicio, FechaFin, Categorias, Zonas);
         }

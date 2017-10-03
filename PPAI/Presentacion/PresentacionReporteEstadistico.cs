@@ -244,7 +244,9 @@ namespace Presentacion
 
                 reporte.Show();
 
-                foreach (var estadistica in estadisticas)
+                grafico.ChartAreas[0].AxisY.Title = $"{estadisticas.Parametros[0]} (m3)";
+
+                foreach (var estadistica in estadisticas.ConsumosPorCategoriaYZona)
                 {
                     var serie = estadistica.Zona;
                     grafico.Series.Add(serie);

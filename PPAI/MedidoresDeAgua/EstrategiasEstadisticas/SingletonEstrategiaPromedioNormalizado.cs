@@ -17,9 +17,17 @@ namespace MedidoresDeAgua.EstrategiasEstadisticas
             return _estrategia ?? (_estrategia = new SingletonEstrategiaPromedioNormalizado());
         }
 
-        public List<ConsumosPorCategoriaYZonaResultado> CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin,
+        public EstadisticaResultado CalcularEstadisticas(DateTime fechaInicio, DateTime fechaFin,
             List<Categoria> categorias, List<Zona> zonas)
         {
+            var estadistica = new EstadisticaResultado()
+            {
+                Parametros = new List<string>
+                {
+                    "Promedio Normalizado"
+                }
+            };
+
             var consumosPorZona = zonas.Select(
                 zona => zona.ObtenerConsumosNormalizadosPorCategoria(fechaInicio, fechaFin, categorias))
                 .ToList();
@@ -37,7 +45,9 @@ namespace MedidoresDeAgua.EstrategiasEstadisticas
                 }
             }
 
-            return consumosPorZona;
+            estadistica.ConsumosPorCategoriaYZona = consumosPorZona;
+
+            return estadistica;
         }
     }
 }
